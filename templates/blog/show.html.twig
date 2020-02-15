@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+  {% block body %}
+   <article>
+        <h2>{{ article.title }}</h2>
+        <div class="meta-data">
+        Ecrit le {{ article.createdAt | date('d/m/Y') }} a {{ article.createdAt | date('H:i') }} dans la catégorie {{ article.category.title }}
+        </div>
+        <div class="content">
+            <img src="{{ article.image }}" alt=""/>
+             {{ article.content | raw }}
+        </div>
+        <hr>
+        <p>
+        Un article de journal doit fournir une description factuelle et objective d’une personne, d’un lieu ou d’un évènement. Généralement, le lecteur parcourt rapidement ce genre de texte. C’est pourquoi l’information la plus importante doit toujours apparaitre en premier. Elle est suivie d'un contenu descriptif qui complète le récit. En menant des recherches et en organisant votre texte correctement, vous serez capable très rapidement de rédiger un article pour un journal d’information<br>Un article de journal doit fournir une description factuelle et objective d’une personne, d’un lieu ou d’un évènement. Généralement, le lecteur parcourt rapidement ce genre de texte. C’est pourquoi l’information la plus importante doit toujours apparaitre en premier. Elle est suivie d'un contenu descriptif qui complète le récit. En menant des recherches et en organisant votre texte correctement, vous serez capable très rapidement de rédiger un article pour un journal d’information
+        </p>
+        </article>  
+        <section id="commentaires">
+           <h1>{{ article.comments | length}} : Commentaires</h1>
+              {% for comment in article.comments %}
+                    <div class="comment">
+                              <div class="row">
+                              <div class="col-3">
+                                   {{comment.author}} (<small>{{comment.createdAt | date ('d/m/Y à H:i')}}</small>)
+                              </div>
+                              <div class="col">
+                                   {{comment.content | raw}}
+                              </div>
+                              </div>
+                    </div>
+              {% endfor %}
+               {{form_start(commentForm)}}  
+                        
+                        {{form_row(commentForm.author,{'attr': {'placeholder':"Votre nom"}})}}
+                        {{form_row(commentForm.content,{'attr': {'placeholder':"Votre commentaires"}})}}
+                         <button type="submit" class="btn btn-success">Commenter</button>
+                {{form_end(commentForm)}}         
+        </section>
+  {% endblock %}
